@@ -1,0 +1,2 @@
+export const BROWSER_VIEW_WIDTH = 512
+export const BROWSER_VIEW_Y_OFFSET = 64

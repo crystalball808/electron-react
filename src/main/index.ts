@@ -1,8 +1,9 @@
-import { app, shell, BrowserWindow, BrowserView, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, BrowserView, ipcMain, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import Store from 'electron-store'
+import { BROWSER_VIEW_WIDTH, BROWSER_VIEW_Y_OFFSET } from "./constants"
 
 const store = new Store()
 
@@ -59,21 +60,30 @@ app.whenReady().then(() => {
   window.setBrowserView(view)
 
   const windowBounds = window.getContentBounds()
-  const width = windowBounds.width / 3
-  const topOffset = 64
-  const height = windowBounds.height - topOffset
+  const browserViewHeight = windowBounds.height - BROWSER_VIEW_Y_OFFSET
 
-  const x = windowBounds.width - width
-  view.setBounds({ x, y: topOffset, width, height })
+  const browserViewX = windowBounds.width - BROWSER_VIEW_WIDTH
+  view.setBounds({ x: browserViewX, y: BROWSER_VIEW_Y_OFFSET, width: BROWSER_VIEW_WIDTH, height: browserViewHeight })
   view.webContents.loadURL('https://google.com')
 
   view.webContents.on('context-menu', (_, params) => {
-    window.webContents.send('select-highlight', {
-      text: params.selectionText,
-      x: params.x,
-      y: params.y,
-      url: params.pageURL,
-      title: view.webContents.getTitle()
+    const menu = Menu.buildFromTemplate([
+      {
+        label: 'Save highlight',
+        click: () => {
+          window.webContents.send('select-highlight', {
+            text: params.selectionText,
+            x: params.x,
+            y: params.y,
+            url: params.pageURL,
+            title: view.webContents.getTitle()
+          })
+        }
+      }
+    ])
+    menu.popup({
+      x: params.x + browserViewX,
+      y: params.y + BROWSER_VIEW_Y_OFFSET,
     })
   })
   view.setAutoResize({

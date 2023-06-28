@@ -8,7 +8,7 @@ function App(): JSX.Element {
    subscribeToQuoteSelection((_, dto) => {
     console.log(dto)
    }) 
-  })
+  }, [])
   return (
     <div className="container">
       <UrlInput />

@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, BrowserView } from 'electron'
+import { app, shell, BrowserWindow, BrowserView, ipcMain, type IpcMainEvent } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -63,6 +63,10 @@ app.whenReady().then(() => {
   const x = windowBounds.width - width
   view.setBounds({ x, y: 0, width, height })
   view.webContents.loadURL('https://electronjs.org')
+
+  ipcMain.on('set-browser-view-url', (_, url) => {
+    view.webContents.loadURL(url)
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

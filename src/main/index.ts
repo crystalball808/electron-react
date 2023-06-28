@@ -2,6 +2,9 @@ import { app, shell, BrowserWindow, BrowserView, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import Store from 'electron-store'
+
+const store = new Store()
 
 function createWindow(): BrowserWindow {
   // Create the browser window.
@@ -82,6 +85,12 @@ app.whenReady().then(() => {
 
   ipcMain.on('set-browser-view-url', (_, url) => {
     view.webContents.loadURL(url)
+  })
+  ipcMain.on('electron-store-get', async (event, val) => {
+    event.returnValue = store.get(val)
+  })
+  ipcMain.on('electron-store-set', async (_, key, val) => {
+    store.set(key, val)
   })
 
   app.on('activate', function () {

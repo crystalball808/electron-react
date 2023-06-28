@@ -3,7 +3,15 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 const api = {
   setUrl: url => ipcRenderer.send('set-browser-view-url', url),
-  onSelectHighlight: callback => ipcRenderer.on('select-highlight', callback)
+  onSelectHighlight: callback => ipcRenderer.on('select-highlight', callback),
+  store: {
+    get(key) {
+      return ipcRenderer.sendSync('electron-store-get', key);
+    },
+    set(property, val) {
+      ipcRenderer.send('electron-store-set', property, val);
+    },
+  },
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

@@ -1,4 +1,3 @@
-import Store from 'electron-store'
 
 export type Highlight = {
   id: number
@@ -7,19 +6,17 @@ export type Highlight = {
   url: string
 }
 
-const store = new Store<{ highlights: Highlight[]; id: number }>()
-
 function setHighlights(highlights: Highlight[]) {
-  store.set('highlights', highlights)
+  window.api.store.set('highlights', highlights)
 }
 function getHighlights(): Highlight[] {
-  return store.get('highlights')
+  return window.api.store.get('highlights') ?? []
 }
 
 function generateIdForNewHighlight() {
-  const id = store.get('id') ?? 1
+  const id = window.api.store.get('id') ?? 1
 
-  store.set('id', id + 1)
+  window.api.store.set('id', id + 1)
 
   return id
 }

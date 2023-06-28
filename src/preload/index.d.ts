@@ -6,6 +6,10 @@ declare global {
     api: {
       setUrl: (url: string) => void
       onSelectHighlight: (callback) => void
+      store: {
+        get: (key: string) => any
+        set: (key: string, val: any) => void
+      }
     }
   }
 }

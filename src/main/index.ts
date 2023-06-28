@@ -1,9 +1,9 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, BrowserView } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -33,6 +33,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -49,7 +51,20 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow()
+  const window = createWindow()
+
+  app.whenReady().then(() => {
+    const view = new BrowserView()
+    window.setBrowserView(view)
+
+    const windowBounds = window.getContentBounds()
+    const width = 300
+    const height = windowBounds.height
+
+    const x = windowBounds.width - width
+    view.setBounds({ x, y: 0, width, height })
+    view.webContents.loadURL('https://electronjs.org')
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

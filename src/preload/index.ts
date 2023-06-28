@@ -10,7 +10,8 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     
     contextBridge.exposeInMainWorld('electronAPI', {
-      setUrl: url => ipcRenderer.send('set-browser-view-url', url)
+      setUrl: url => ipcRenderer.send('set-browser-view-url', url),
+      onSelectQuote: callback => ipcRenderer.on('select-quote', callback)
     })
   } catch (error) {
     console.error(error)

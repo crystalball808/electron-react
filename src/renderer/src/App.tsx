@@ -3,6 +3,7 @@ import './styles.css'
 import { UrlInput } from './widgets/UrlInput'
 import { subscribeToHighlightSelection } from './services/ipc'
 import { usePersistedHighlights } from './logic/usePersistedHighlights'
+import { HighlightItem } from './widgets/HighlightItem'
 
 function App(): JSX.Element {
   const { highlights, addHighlight } = usePersistedHighlights()
@@ -20,7 +21,7 @@ function App(): JSX.Element {
     <div className="container">
       <div>
         {highlights.map(highlight => (
-          <div key={highlight.id}>{highlight.title}</div>
+          <HighlightItem key={highlight.id} highlight={highlight} />
         ))}
       </div>
       <UrlInput />

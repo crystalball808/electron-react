@@ -1,3 +1,4 @@
+import { sendUrl } from "@renderer/services/ipc"
 import { FC, FormEventHandler, useState } from 'react'
 
 export const UrlInput: FC = () => {
@@ -6,8 +7,7 @@ export const UrlInput: FC = () => {
   const handleChangeUrl: FormEventHandler<HTMLFormElement> = event => {
     event.nativeEvent.preventDefault()
 
-    // @ts-expect-error renderer doesn't know about electronAPI
-    window.electronAPI.setUrl(url)
+    sendUrl(url)
   }
 
   return (

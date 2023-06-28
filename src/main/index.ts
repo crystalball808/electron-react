@@ -6,8 +6,6 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -16,6 +14,7 @@ function createWindow(): BrowserWindow {
       sandbox: false
     }
   })
+  mainWindow.maximize()
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -57,13 +56,22 @@ app.whenReady().then(() => {
   window.setBrowserView(view)
 
   const windowBounds = window.getContentBounds()
-  const width = 300
+  const width = windowBounds.width / 3
   const topOffset = 64
   const height = windowBounds.height - topOffset
 
   const x = windowBounds.width - width
   view.setBounds({ x, y: topOffset, width, height })
-  view.webContents.loadURL('https://electronjs.org')
+  view.webContents.loadURL('https://google.com')
+  view.webContents.on('context-menu', (_, params) => {
+    window.webContents.send('select-quote', { text: params.selectionText, x: params.x, y: params.y })
+  })
+  view.setAutoResize({
+    width: true,
+    height: true,
+    horizontal: true,
+    vertical: true,
+  })
 
   ipcMain.on('set-browser-view-url', (_, url) => {
     view.webContents.loadURL(url)

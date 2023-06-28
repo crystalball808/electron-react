@@ -14,7 +14,12 @@ type CallbackDto = {
   y: number
 }
 type Callback = (event: any, dto: CallbackDto) => void
+
+let subscribed = false
 export function subscribeToQuoteSelection(callback: Callback) {
-  // @ts-expect-error renderer doesn't know about electronAPI
-  window.electronAPI.onSelectQuote(callback)
+  if (!subscribed) {
+    // @ts-expect-error renderer doesn't know about electronAPI
+    window.electronAPI.onSelectQuote(callback)
+    subscribed = true
+  }
 }

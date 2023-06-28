@@ -4,22 +4,18 @@ function addHttpsToUrl(url: string) {
 }
 
 export function sendUrl(url: string) {
-  // @ts-expect-error renderer doesn't know about electronAPI
-  window.electronAPI.setUrl(addHttpsToUrl(url))
+  window.api.setUrl(addHttpsToUrl(url))
 }
 
 type CallbackDto = {
   text: string
   x: number
   y: number
+  title: string
+  url: string
 }
 type Callback = (event: any, dto: CallbackDto) => void
 
-let subscribed = false
-export function subscribeToQuoteSelection(callback: Callback) {
-  if (!subscribed) {
-    // @ts-expect-error renderer doesn't know about electronAPI
-    window.electronAPI.onSelectQuote(callback)
-    subscribed = true
-  }
+export function subscribeToHighlightSelection(callback: Callback) {
+  window.api.onSelectHighlight(callback)
 }

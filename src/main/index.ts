@@ -20,7 +20,7 @@ function createWindow(): BrowserWindow {
     mainWindow.show()
   })
 
-  mainWindow.webContents.setWindowOpenHandler((details) => {
+  mainWindow.webContents.setWindowOpenHandler(details => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
@@ -63,14 +63,21 @@ app.whenReady().then(() => {
   const x = windowBounds.width - width
   view.setBounds({ x, y: topOffset, width, height })
   view.webContents.loadURL('https://google.com')
+
   view.webContents.on('context-menu', (_, params) => {
-    window.webContents.send('select-quote', { text: params.selectionText, x: params.x, y: params.y })
+    window.webContents.send('select-highlight', {
+      text: params.selectionText,
+      x: params.x,
+      y: params.y,
+      url: params.pageURL,
+      title: view.webContents.getTitle()
+    })
   })
   view.setAutoResize({
     width: true,
     height: true,
     horizontal: true,
-    vertical: true,
+    vertical: true
   })
 
   ipcMain.on('set-browser-view-url', (_, url) => {

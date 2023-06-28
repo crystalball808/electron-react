@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, BrowserView, ipcMain, type IpcMainEvent } from 'electron'
+import { app, shell, BrowserWindow, BrowserView, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -58,10 +58,11 @@ app.whenReady().then(() => {
 
   const windowBounds = window.getContentBounds()
   const width = 300
-  const height = windowBounds.height
+  const topOffset = 64
+  const height = windowBounds.height - topOffset
 
   const x = windowBounds.width - width
-  view.setBounds({ x, y: 0, width, height })
+  view.setBounds({ x, y: topOffset, width, height })
   view.webContents.loadURL('https://electronjs.org')
 
   ipcMain.on('set-browser-view-url', (_, url) => {

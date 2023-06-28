@@ -53,18 +53,16 @@ app.whenReady().then(() => {
 
   const window = createWindow()
 
-  app.whenReady().then(() => {
-    const view = new BrowserView()
-    window.setBrowserView(view)
+  const view = new BrowserView()
+  window.setBrowserView(view)
 
-    const windowBounds = window.getContentBounds()
-    const width = 300
-    const height = windowBounds.height
+  const windowBounds = window.getContentBounds()
+  const width = 300
+  const height = windowBounds.height
 
-    const x = windowBounds.width - width
-    view.setBounds({ x, y: 0, width, height })
-    view.webContents.loadURL('https://electronjs.org')
-  })
+  const x = windowBounds.width - width
+  view.setBounds({ x, y: 0, width, height })
+  view.webContents.loadURL('https://electronjs.org')
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

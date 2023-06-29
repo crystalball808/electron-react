@@ -3,3 +3,29 @@
   justify-content: space-between;
   width: 100%;
 }
+
+.url-input {
+  display: flex;
+  height: 32px;
+}
+
+.list {
+  width: 768px;
+  height: 700px;
+  overflow-y: scroll;
+}
+
+.list-item {
+  border: solid;
+  border-width: 2px;
+  border-color: gray;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.header {
+  font-size: xx-large;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  margin-bottom: 4px;
+}

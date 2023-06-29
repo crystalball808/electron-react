@@ -61,7 +61,6 @@ app.whenReady().then(() => {
 
   const windowBounds = window.getContentBounds()
   const browserViewHeight = windowBounds.height - BROWSER_VIEW_Y_OFFSET
-
   const browserViewX = windowBounds.width - BROWSER_VIEW_WIDTH
   view.setBounds({ x: browserViewX, y: BROWSER_VIEW_Y_OFFSET, width: BROWSER_VIEW_WIDTH, height: browserViewHeight })
   view.webContents.loadURL('https://google.com')

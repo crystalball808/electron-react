@@ -11,7 +11,7 @@ export const UrlInput: FC = () => {
   }
 
   return (
-    <form onSubmit={handleChangeUrl}>
+    <form className="url-input" onSubmit={handleChangeUrl}>
       <input
         type="text"
         value={url}

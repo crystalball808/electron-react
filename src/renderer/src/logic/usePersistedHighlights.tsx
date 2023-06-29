@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { storage } from '@renderer/services/storage'
 
 export const usePersistedHighlights = () => {
-  const [highlights, setHighlights] = useState<Highlight[]>(() => storage.getHighlights())
+  const [highlights, setHighlights] = useState<Highlight[]>([])
+  console.log('on rerender', highlights)
 
-  const addHighlight = (highlight: Omit<Highlight, 'id'>) => {
+  const addHighlight =(newHighlight: Omit<Highlight, 'id'>) => {
     const id = storage.generateIdForNewHighlight()
 
     const highlightDto: Highlight = {
-      ...highlight,
+      ...newHighlight,
       id
     }
 
@@ -18,8 +19,14 @@ export const usePersistedHighlights = () => {
     storage.setHighlights(newHighlights)
   }
 
+  const clearHighlights = () => {
+    storage.setHighlights([])
+    setHighlights([])
+  }
+
   return {
     highlights,
-    addHighlight
+    addHighlight,
+    clearHighlights
   }
 }

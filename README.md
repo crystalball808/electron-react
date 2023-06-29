@@ -9,12 +9,12 @@ Used template: https://electron-vite.org/
 ### Install
 
 ```bash
-$ pnpm install
+$ npm install
 ```
 
 ### Usage
 
 ```bash
-$ pnpm dev
+$ npm dev
 ```
 To add a new highlight, simply select a text in a web browser, right-click it, and then hit the `Save highlight` button

@@ -66,6 +66,8 @@ app.whenReady().then(() => {
   view.webContents.loadURL('https://google.com')
 
   view.webContents.on('context-menu', (_, params) => {
+    if (!params.selectionText) return
+  
     const menu = Menu.buildFromTemplate([
       {
         label: 'Save highlight',

@@ -10,7 +10,9 @@ export const HighlightItem: FC<{ highlight: Highlight }> = ({ highlight }) => {
           marginBottom: 8
         }}
       >
-        {highlight.url}
+        <a href={highlight.url} target="_blank">
+          {highlight.url}
+        </a>
       </div>
       <div>{highlight.text}</div>
     </div>

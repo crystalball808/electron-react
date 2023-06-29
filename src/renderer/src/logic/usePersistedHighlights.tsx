@@ -4,7 +4,6 @@ import { storage } from '@renderer/services/storage'
 
 export const usePersistedHighlights = () => {
   const [highlights, setHighlights] = useState<Highlight[]>([])
-  console.log('on rerender', highlights)
 
   const addHighlight =(newHighlight: Omit<Highlight, 'id'>) => {
     const id = storage.generateIdForNewHighlight()

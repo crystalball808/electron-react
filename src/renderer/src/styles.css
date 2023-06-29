@@ -16,11 +16,17 @@
 }
 
 .list-item {
+  padding: 4px;
   border: solid;
   border-width: 2px;
   border-color: gray;
   border-radius: 4px;
   margin-bottom: 4px;
+}
+
+.title {
+  font-size: larger;
+  font-weight: bold;
 }
 
 .header {

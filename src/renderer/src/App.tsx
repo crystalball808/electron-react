@@ -25,6 +25,7 @@ function App(): JSX.Element {
           {highlights.map(highlight => (
             <HighlightItem key={highlight.id} highlight={highlight} />
           ))}
+          {highlights.length === 0 ? <div className="title">No highlights yet!</div> : null}
         </div>
       </div>
       <UrlInput />
